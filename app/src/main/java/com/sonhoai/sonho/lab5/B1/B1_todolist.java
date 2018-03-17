@@ -123,6 +123,11 @@ public class B1_todolist extends AppCompatActivity {
             ghiChus.clear();
             getData();
             Toast.makeText(getApplicationContext(), "Xoa Thanh Cong", Toast.LENGTH_SHORT).show();
+        }else if(item.getItemId() == R.id.cmDeleteAll){
+            db.query("delete from GhiChu");
+            ghiChus.clear();
+            getData();
+            Toast.makeText(getApplicationContext(), "Xoa Thanh Cong", Toast.LENGTH_SHORT).show();
         }
         return false;
     }
