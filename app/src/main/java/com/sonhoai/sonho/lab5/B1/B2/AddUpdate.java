@@ -18,7 +18,7 @@ public class AddUpdate extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_to_do_list);
+        setContentView(R.layout.add_update);
 
         edtFirst = findViewById(R.id.edtFirst);
         edtLast = findViewById(R.id.edtLast);
@@ -41,8 +41,8 @@ public class AddUpdate extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AddUpdate.this, B1_todolist.class);
-                intent.putExtra("ID", "EDIT");
+                Intent intent = new Intent(AddUpdate.this, B2.class);
+                intent.putExtra("ID", ID);
                 intent.putExtra("First", edtFirst.getText());
                 intent.putExtra("LastName", edtLast.getText());
                 intent.putExtra("Gender", edtGender.getText());

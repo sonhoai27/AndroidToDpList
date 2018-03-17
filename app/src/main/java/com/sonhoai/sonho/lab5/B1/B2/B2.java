@@ -29,6 +29,7 @@ public class B2 extends AppCompatActivity {
         init();
         getData();
         registerForContextMenu(lvToDoList);
+        setTitle("AAA");
     }
     private void init(){
         lvToDoList = findViewById(R.id.lvEmployee);
@@ -84,11 +85,11 @@ public class B2 extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == 123 && resultCode == RESULT_OK && data != null){
             String status = data.getStringExtra("ID");
-            String firstname = data.getStringExtra("CONTENT");
-            String lastname = data.getStringExtra("DATE");
-            String gender = data.getStringExtra("CONTENT");
-            String hire = data.getStringExtra("DATE");
-            String dept = data.getStringExtra("DATE");
+            String firstname = data.getStringExtra("Frist");
+            String lastname = data.getStringExtra("LastName");
+            String gender = data.getStringExtra("Gender");
+            String hire = data.getStringExtra("Hire");
+            String dept = data.getStringExtra("Dept");
 
             if(status.equals("ADD")){
                 db.query("insert into Employee values(null, '"+firstname+"', '"+lastname+"', '"+gender+"', '"+hire+"', '"+dept+"')");
