@@ -17,16 +17,16 @@ import java.util.ArrayList;
 
 public class ListViewAdapter extends BaseAdapter {
     private Context context;
-    private ArrayList<GhiChu> ghiChus;
+    private ArrayList<Employee> employees;
 
-    public ListViewAdapter(Context context, ArrayList<GhiChu> ghiChus) {
+    public ListViewAdapter(Context context, ArrayList<Employee> employees) {
         this.context = context;
-        this.ghiChus = ghiChus;
+        this.employees = employees;
     }
 
     @Override
     public int getCount() {
-        return ghiChus.size();
+        return employees.size();
     }
 
     @Override
@@ -41,11 +41,17 @@ public class ListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = LayoutInflater.from(context).inflate(R.layout.custom_item_note, null);
-        TextView txtContent = view.findViewById(R.id.txtContent);
-        TextView txtDate = view.findViewById(R.id.txtDate);
-        txtContent.setText(ghiChus.get(i).getContent());
-        txtDate.setText(ghiChus.get(i).getDate());
+        view = LayoutInflater.from(context).inflate(R.layout.custom_employee, null);
+        TextView txtFirst = view.findViewById(R.id.tvFirstName);
+        TextView txtLast = view.findViewById(R.id.tvLastName);
+        TextView txtGender = view.findViewById(R.id.tvGender);
+        TextView txtHire = view.findViewById(R.id.tvHire);
+        TextView txtDept = view.findViewById(R.id.tvDept);
+        txtFirst.setText(employees.get(i).getFistName());
+        txtLast.setText(employees.get(i).getLastName());
+        txtGender.setText(employees.get(i).getGender());
+        txtHire.setText(employees.get(i).getHireDate());
+        txtDept.setText(employees.get(i).getDept());
         return view;
     }
 }

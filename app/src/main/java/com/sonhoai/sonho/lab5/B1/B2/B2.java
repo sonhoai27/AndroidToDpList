@@ -16,43 +16,50 @@ import com.sonhoai.sonho.lab5.R;
 
 import java.util.ArrayList;
 
-public class B1_todolist extends AppCompatActivity {
+public class B2 extends AppCompatActivity {
     private ListView lvToDoList;
     private ListViewAdapter listViewAdapter;
-    private ArrayList<GhiChu> ghiChus = new ArrayList<>();
+    private ArrayList<Employee> employees = new ArrayList<>();
     private DB db;
     private int Id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.b1_todolist);
+        setContentView(R.layout.b2_activity);
         init();
         getData();
         registerForContextMenu(lvToDoList);
     }
     private void init(){
-        lvToDoList = findViewById(R.id.lvToDoList);
-        listViewAdapter = new ListViewAdapter(getApplicationContext(), ghiChus);
+        lvToDoList = findViewById(R.id.lvEmployee);
+        listViewAdapter = new ListViewAdapter(getApplicationContext(), employees);
 
         db = new DB(
                 getApplicationContext(),
-                "GHICHU.sqlite",
+                "EMPLOYEE.sqlite",
                 null,
                 1
         );
         db.query("create table if not exists " +
-                "GhiChu(Id integer primary key autoincrement, Content varchar, Date varchar)");
+                "Employee(Id integer primary key autoincrement, FirstName varchar, LastName varchar, Gender varchar, Hire varchar, Dept varchar)");
     }
 
     public void getData(){
-        Cursor note = db.getData("select * from GhiChu");
-        while (note.moveToNext()){
-            ghiChus.add(new GhiChu(note.getInt(0),note.getString(1),note.getString(2)));
+        Cursor person = db.getData("select * from Employee");
+        while (person.moveToNext()){
+            employees.add(
+                    new Employee(
+                            person.getInt(0),
+                            person.getString(1),
+                            person.getString(2),
+                            person.getString(3),
+                            person.getString(4),
+                            person.getString(5)));
         }
 
         listViewAdapter = new ListViewAdapter(
                 getApplicationContext(),
-                ghiChus
+                employees
         );
         lvToDoList.setAdapter(listViewAdapter);
     }
@@ -66,7 +73,7 @@ public class B1_todolist extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.add_new){
-            Intent intent = new Intent(B1_todolist.this, AddNewToDoList.class);
+            Intent intent = new Intent(B2.this, AddUpdate.class);
             intent.putExtra("ID", "ADD");
             startActivityForResult(intent, 123);
         }
@@ -77,21 +84,25 @@ public class B1_todolist extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == 123 && resultCode == RESULT_OK && data != null){
             String status = data.getStringExtra("ID");
-            String content = data.getStringExtra("CONTENT");
-            String date = data.getStringExtra("DATE");
+            String firstname = data.getStringExtra("CONTENT");
+            String lastname = data.getStringExtra("DATE");
+            String gender = data.getStringExtra("CONTENT");
+            String hire = data.getStringExtra("DATE");
+            String dept = data.getStringExtra("DATE");
+
             if(status.equals("ADD")){
-                db.query("insert into GhiChu values(null, '"+content+"', '"+date+"')");
-                ghiChus.clear();
+                db.query("insert into Employee values(null, '"+firstname+"', '"+lastname+"', '"+gender+"', '"+hire+"', '"+dept+"')");
+                employees.clear();
                 getData();
             }else if(!status.equals("ADD")){
-                update(Id, content,date);
+                update(Id, firstname,lastname,gender,hire,dept);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-    public void update(int id, String content, String date){
-        db.query("update GhiChu set Content = '"+content+"', Date = '"+date+"'  where Id = "+id);
-        ghiChus.clear();
+    public void update(int id, String first, String last, String gender, String hire, String dept){
+        db.query("update Employee set FirstName = '"+first+"', LastName = '"+last+"', Gender ='"+gender+"', Hire='"+hire+"',Dept='"+dept+"' where Id = "+id);
+        employees.clear();
         getData();
     }
     @Override
@@ -105,22 +116,25 @@ public class B1_todolist extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         int position = info.position;
-        Id = ghiChus.get(position).getID();
+        Id = employees.get(position).getID();
         if(item.getItemId() == R.id.cmEdit){
-            Intent intent = new Intent(B1_todolist.this, AddNewToDoList.class);
+            Intent intent = new Intent(B2.this, AddUpdate.class);
             intent.putExtra("ID", "EDIT");
-            intent.putExtra("Content", ghiChus.get(position).getContent());
-            intent.putExtra("Date", ghiChus.get(position).getDate());
+            intent.putExtra("First", employees.get(position).getFistName());
+            intent.putExtra("LastName", employees.get(position).getLastName());
+            intent.putExtra("Gender", employees.get(position).getGender());
+            intent.putExtra("Hire", employees.get(position).getHireDate());
+            intent.putExtra("Dept", employees.get(position).getDept());
             startActivityForResult(intent, 123);
             return true;
         }else if(item.getItemId() == R.id.cmDelete){
-            db.query("delete from GhiChu where Id ="+ghiChus.get(position).getID());
-            ghiChus.clear();
+            db.query("delete from Employee where Id ="+ employees.get(position).getID());
+            employees.clear();
             getData();
             Toast.makeText(getApplicationContext(), "Xoa Thanh Cong", Toast.LENGTH_SHORT).show();
         }else if(item.getItemId() == R.id.cmDeleteAll){
-            db.query("delete from GhiChu");
-            ghiChus.clear();
+            db.query("delete from Employee");
+            employees.clear();
             getData();
             Toast.makeText(getApplicationContext(), "Xoa Thanh Cong", Toast.LENGTH_SHORT).show();
         }

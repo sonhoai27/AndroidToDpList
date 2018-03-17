@@ -42,11 +42,11 @@ public class B1_todolist extends AppCompatActivity {
                 1
         );
         db.query("create table if not exists " +
-                "GhiChu(Id integer primary key autoincrement, Content varchar, Date varchar)");
+                "Employee(Id integer primary key autoincrement, Content varchar, Date varchar)");
     }
 
     public void getData(){
-        Cursor note = db.getData("select * from GhiChu");
+        Cursor note = db.getData("select * from Employee");
         while (note.moveToNext()){
             ghiChus.add(new GhiChu(note.getInt(0),note.getString(1),note.getString(2)));
         }
@@ -81,7 +81,7 @@ public class B1_todolist extends AppCompatActivity {
             String content = data.getStringExtra("CONTENT");
             String date = data.getStringExtra("DATE");
             if(status.equals("ADD")){
-                db.query("insert into GhiChu values(null, '"+content+"', '"+date+"')");
+                db.query("insert into Employee values(null, '"+content+"', '"+date+"')");
                 ghiChus.clear();
                 getData();
             }else if(!status.equals("ADD")){
@@ -91,7 +91,7 @@ public class B1_todolist extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
     public void update(int id, String content, String date){
-        db.query("update GhiChu set Content = '"+content+"', Date = '"+date+"'  where Id = "+id);
+        db.query("update Employee set Content = '"+content+"', Date = '"+date+"'  where Id = "+id);
         ghiChus.clear();
         getData();
     }
@@ -115,12 +115,12 @@ public class B1_todolist extends AppCompatActivity {
             startActivityForResult(intent, 123);
             return true;
         }else if(item.getItemId() == R.id.cmDelete){
-            db.query("delete from GhiChu where Id ="+ghiChus.get(position).getID());
+            db.query("delete from Employee where Id ="+ghiChus.get(position).getID());
             ghiChus.clear();
             getData();
             Toast.makeText(getApplicationContext(), "Xoa Thanh Cong", Toast.LENGTH_SHORT).show();
         }else if(item.getItemId() == R.id.cmDeleteAll){
-            db.query("delete from GhiChu");
+            db.query("delete from Employee");
             ghiChus.clear();
             getData();
             Toast.makeText(getApplicationContext(), "Xoa Thanh Cong", Toast.LENGTH_SHORT).show();
