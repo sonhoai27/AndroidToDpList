@@ -3,6 +3,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -76,21 +77,22 @@ public class B2 extends AppCompatActivity {
         if(item.getItemId() == R.id.add_new){
             Intent intent = new Intent(B2.this, AddUpdate.class);
             intent.putExtra("ID", "ADD");
-            startActivityForResult(intent, 123);
+            startActivityForResult(intent, 1234);
         }
         return false;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == 123 && resultCode == RESULT_OK && data != null){
+        Log.i("AAAAA", data.toString());
+        if(requestCode == 1234 && resultCode == RESULT_OK && data != null){
             String status = data.getStringExtra("ID");
             String firstname = data.getStringExtra("Frist");
             String lastname = data.getStringExtra("LastName");
             String gender = data.getStringExtra("Gender");
             String hire = data.getStringExtra("Hire");
             String dept = data.getStringExtra("Dept");
-
+            Log.i("AAAA", dept);
             if(status.equals("ADD")){
                 db.query("insert into Employee values(null, '"+firstname+"', '"+lastname+"', '"+gender+"', '"+hire+"', '"+dept+"')");
                 employees.clear();
@@ -126,7 +128,7 @@ public class B2 extends AppCompatActivity {
             intent.putExtra("Gender", employees.get(position).getGender());
             intent.putExtra("Hire", employees.get(position).getHireDate());
             intent.putExtra("Dept", employees.get(position).getDept());
-            startActivityForResult(intent, 123);
+            startActivityForResult(intent, 1234);
             return true;
         }else if(item.getItemId() == R.id.cmDelete){
             db.query("delete from Employee where Id ="+ employees.get(position).getID());

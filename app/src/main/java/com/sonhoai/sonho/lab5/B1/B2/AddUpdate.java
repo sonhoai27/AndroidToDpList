@@ -25,7 +25,7 @@ public class AddUpdate extends AppCompatActivity {
         edtGender = findViewById(R.id.edtGender);
         edtHire = findViewById(R.id.edtHire);
         edtDept = findViewById(R.id.edtDept);
-        btnAdd = findViewById(R.id.btnAdd);
+        btnAdd = findViewById(R.id.btnAdd2);
 
         Bundle bundle = getIntent().getExtras();
         if(bundle.getString("ID").equals("ADD")){
@@ -48,7 +48,6 @@ public class AddUpdate extends AppCompatActivity {
                 intent.putExtra("Gender", edtGender.getText());
                 intent.putExtra("Hire", edtHire.getText());
                 intent.putExtra("Dept", edtDept.getText());
-                intent.putExtra("ID", ID);
                 setResult(RESULT_OK, intent);
                 finish();
             }
