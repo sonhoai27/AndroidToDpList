@@ -3,6 +3,7 @@ package com.sonhoai.sonho.lab5.B1.B2;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,12 +44,12 @@ public class AddUpdate extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(AddUpdate.this, B2.class);
                 intent.putExtra("ID", ID);
-                intent.putExtra("First", edtFirst.getText());
-                intent.putExtra("LastName", edtLast.getText());
-                intent.putExtra("Gender", edtGender.getText());
-                intent.putExtra("Hire", edtHire.getText());
-                intent.putExtra("Dept", edtDept.getText());
-                setResult(RESULT_OK, intent);
+                intent.putExtra("First", edtFirst.getText().toString());
+                intent.putExtra("LastName", edtLast.getText().toString());
+                intent.putExtra("Gender", edtGender.getText().toString());
+                intent.putExtra("Hire", edtHire.getText().toString());
+                intent.putExtra("Dept", edtDept.getText().toString());
+                setResult(1333, intent);
                 finish();
             }
         });

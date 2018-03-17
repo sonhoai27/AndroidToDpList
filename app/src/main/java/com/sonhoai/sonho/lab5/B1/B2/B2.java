@@ -30,7 +30,6 @@ public class B2 extends AppCompatActivity {
         init();
         getData();
         registerForContextMenu(lvToDoList);
-        setTitle("AAA");
     }
     private void init(){
         lvToDoList = findViewById(R.id.lvEmployee);
@@ -56,7 +55,8 @@ public class B2 extends AppCompatActivity {
                             person.getString(2),
                             person.getString(3),
                             person.getString(4),
-                            person.getString(5)));
+                            person.getString(5)
+                    ));
         }
 
         listViewAdapter = new ListViewAdapter(
@@ -84,16 +84,16 @@ public class B2 extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.i("AAAAA", data.toString());
-        if(requestCode == 1234 && resultCode == RESULT_OK && data != null){
+
+        if(requestCode == 1234 && resultCode == 1333 && data != null){
             String status = data.getStringExtra("ID");
-            String firstname = data.getStringExtra("Frist");
+            String firstname = data.getStringExtra("First");
             String lastname = data.getStringExtra("LastName");
             String gender = data.getStringExtra("Gender");
             String hire = data.getStringExtra("Hire");
             String dept = data.getStringExtra("Dept");
-            Log.i("AAAA", dept);
             if(status.equals("ADD")){
+                Log.i("AAAAA", data.getStringExtra("ID"));
                 db.query("insert into Employee values(null, '"+firstname+"', '"+lastname+"', '"+gender+"', '"+hire+"', '"+dept+"')");
                 employees.clear();
                 getData();
