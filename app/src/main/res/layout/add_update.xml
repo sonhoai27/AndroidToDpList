@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <EditText
@@ -22,16 +23,30 @@
         android:hint="last"
         android:inputType="textPersonName" />
 
-    <EditText
+    <RadioGroup
+        android:layout_weight="1"
         android:id="@+id/edtGender"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ems="10"
-        android:hint="gender"
-        android:inputType="textPersonName" />
+        android:layout_height="wrap_content" >
 
+        <RadioButton
+            android:id="@+id/edtGenderMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Male" />
+
+        <RadioButton
+            android:id="@+id/edtGenderFemale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female" />
+
+    </RadioGroup>
     <EditText
+        android:editable="false"
+        android:focusable="false"
+        tools:ignore="Deprecated"
         android:id="@+id/edtHire"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
